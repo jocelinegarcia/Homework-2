@@ -1,0 +1,76 @@
+#include <iostream>
+#include <string>
+#include <cstdlib>
+
+using namespace std;
+struct Node{ //holds data items that are in the stack
+    string data;
+    Node *next; // points to the next node
+    };
+class Stack{
+    public:
+        Stack();
+        ~Stack();
+        void push(string d);
+        string pop();
+        string displayString();
+        bool isEmpty();
+        
+    private:
+        Node *top; //Node that points to the top of the stack
+    };
+Stack::Stack(){
+    top=NULL; //initializes stack to be empty
+    }
+    
+void Stack::push(string d){ //pushes element on top of the stack
+    Node *temp = new Node; //new node stores data for temp
+    temp -> data = d; //input is stored in new node
+    temp ->next =top; //temp now points to the old new
+    
+    top= temp; // moves it to point to new top
+    }
+string Stack::pop(){
+  if(!isEmpty()){
+      string value = top -> data; //this points to the curr elem to be pop & stores value in var
+      Node *oldtop =top; //keeps track of where old top was
+      top= oldtop ->next; //move top to point to next
+      delete oldtop; //deletes old top because its poping it
+      return value;
+      }
+    else{
+        exit (1); //exits if stack is emoty
+        }
+    }
+Stack::~Stack(){ //deconstructor helps clean up pointers
+    while(!isEmpty()){
+        pop(); //when stack is not empty it performs pop function
+        }
+     }
+string Stack::displayString(){ //function used to display stack
+    string result;
+    if(isEmpty()){ //if the stack is empty it exits
+        exit(1);
+        }
+    else{
+        Node *current = top; //points to the top
+        while (current !=NULL){
+            result = result + current -> data + " " ;
+            current =current ->next;
+            }
+            return result;
+        }
+}
+bool Stack::isEmpty(){ //checks if stack is empty
+    return (top == NULL);
+    }
+int main(){
+    Stack *stack =new Stack();
+    stack->push("A");
+    stack->push("B");
+    stack->push("C");
+    
+    cout << "output: " << endl << stack->displayString() << endl;
+    return 0;
+}
+
