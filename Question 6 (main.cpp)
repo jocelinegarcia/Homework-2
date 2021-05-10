@@ -1,0 +1,34 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+#include "Stack.h"
+
+using namespace std;
+
+
+int main(){
+    fstream textFile;
+    textFile.open("chuckjokes.txt"); //opens my already existing text file with jokes
+    
+    Stack<char> charStack; //char is the type of stack
+    
+    char current; // variable used to read the current char
+    while(textFile.get(current)){ // this while loop will read text file one by one till none left
+           cout << current;
+           charStack.push(current);
+       }
+
+       fstream outputFile; // creates a brand new output file
+       outputFile.open("outputFile.txt");
+    cout<< endl;
+      
+    cout << "Backwards: "<< endl;;
+    
+       while(!charStack.isEmpty()){ // if the stack is not empty it pops one by one till it is empty
+           charStack.pop(current);// writes it on file
+           cout << current; // as it pops each character it writes it in new file
+       }
+    cout<< endl;
+    return 0;
+    
+}
