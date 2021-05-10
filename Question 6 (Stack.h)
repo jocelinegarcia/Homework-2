@@ -1,0 +1,74 @@
+#ifndef Stack_h
+#define Stack_h
+#include <stack>
+#include <iostream>
+
+
+using namespace std;
+
+template <class T>
+class Stack{
+private:
+    struct Node{ //node holds the data, items that are in a stack
+        T value; // t holds the value of the node
+        Node *next; //pointer to another node , what node is bellow -> next one ect
+    };
+    Node *top; // node points to top of the stack, not accessible to everyone
+    int num; // total number of elements
+public:
+    Stack(){ //constructor
+        top= NULL; //initialize the stack to be empty
+        num=0;
+    }
+
+    void push(T val){ //pushes element on top of stack
+                Node *temp = new Node; //stores data
+                temp->value = val; //input value is stored in new node
+
+                num++; // increases the number of elements
+                    
+                temp->next = top; // tnew node points to the old top of stack
+                top = temp; //points top to new top of the stack
+        
+    }
+
+        void pop(T &var){ //pops top element off of the stack
+    
+           if(isEmpty()){
+                cout << "EMPTY" << endl;   //returs if stack is empty
+                return;
+            }
+            
+            else{
+                num--;
+                var = top->value; //this points to the curr elem to be pop & stores value in var
+
+                Node *oldtop = top; //keeps track of where old top was
+                top = oldtop->next; //move top to point to next
+                
+                delete oldtop; //deletes old top because its poping it
+            }
+        }
+            
+            
+        bool isEmpty(){ // checks if stack is empty
+            return (top ==NULL);
+            
+        }
+
+        ~Stack(){ //destructor, helps clean up pointers
+            Node *currentNode = top; //gets ptr to top
+            Node *nextNode;
+
+            while(currentNode != nullptr){
+                nextNode = currentNode->next; //goes through the stack until curr node is null
+                delete currentNode;
+                currentNode = nextNode; //updates current to next, keeps pointing to top
+            }
+        }
+        int getNumElements() const{
+            return num; //returns num of elements
+        }
+};
+
+#endif /* Stack_h */
